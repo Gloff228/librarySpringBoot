@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="1" author="roman">
+        <createTable tableName="book">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="registration_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="book_rental">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rent_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="return_date" type="date">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="book_rental"
+                baseColumnNames="user_id"
+                constraintName="fk_user_id"
+                referencedTableName="user"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="book_rental"
+                baseColumnNames="book_id"
+                constraintName="fk_book_id"
+                referencedTableName="book"
+                referencedColumnNames="id"
+        />
+
+        <createIndex tableName="book_rental" indexName="idx_book_rental_book_id">
+            <column name="book_id"/>
+        </createIndex>
+        <createIndex tableName="book_rental" indexName="idx_book_rental_user_id">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2" author="roman">
+        <addUniqueConstraint
+                tableName="user"
+                columnNames="email"
+                constraintName="uk_user_email"
+        />
+    </changeSet>
+
+</databaseChangeLog>

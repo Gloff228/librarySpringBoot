@@ -36,12 +36,14 @@ class UserController(
         ResponseEntity.ok(userService.updateUser(userId, request))
 
     @DeleteMapping("/")
-    fun deleteAll() {
+    fun deleteAll(): ResponseEntity<Void> {
         userService.deleteAllUsers()
+        return ResponseEntity.noContent().build()
     }
 
     @DeleteMapping("/{userId}")
-    fun deleteById(@PathVariable userId: Long) {
+    fun deleteById(@PathVariable userId: Long): ResponseEntity<Void> {
         userService.deleteUserById(userId)
+        return ResponseEntity.noContent().build()
     }
 }

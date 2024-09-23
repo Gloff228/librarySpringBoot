@@ -94,14 +94,14 @@ class BookRentalService(
                 ResponseStatusException(HttpStatus.NOT_FOUND, "There is no such book.")
             }
         if (book.bookRentals.any { it.returnDate == null }) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "This book is already rented out.")
+            throw ResponseStatusException(HttpStatus.CONFLICT, "This book is already rented out.")
         }
         return bookRentalRepository.save(
             BookRental(
                 user = user,
                 book = book,
                 rentDate =
-                request.rentDate.takeIf { it != null } ?: Date.valueOf(LocalDate.now())
+                request.rentDate ?: Date.valueOf(LocalDate.now())
             )
         ).toView()
     }

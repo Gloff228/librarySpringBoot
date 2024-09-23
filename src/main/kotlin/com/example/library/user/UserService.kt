@@ -29,7 +29,7 @@ class UserService(
                 name = userRequest.name,
                 email = userRequest.email,
                 registrationDate =
-                userRequest.registrationDate.takeIf { it != null } ?: Date.valueOf(LocalDate.now())
+                userRequest.registrationDate ?: Date.valueOf(LocalDate.now())
             )
         ).toView()
 
@@ -46,7 +46,7 @@ class UserService(
             user.copy(
                 name = patchUserRequest.name.takeIf { it.isNotBlank() } ?: user.name,
                 email = patchUserRequest.email.takeIf { it.isNotBlank() } ?: user.email,
-                registrationDate = patchUserRequest.registrationDate.takeIf { it != null } ?: user.registrationDate
+                registrationDate = patchUserRequest.registrationDate ?: user.registrationDate
             )
         ).toView()
     }

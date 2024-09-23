@@ -44,7 +44,7 @@ class BookService(
             book.copy(
                 title = request.title.takeIf { it.isNotBlank() } ?: book.title,
                 author = request.author.takeIf { it.isNotBlank() } ?: book.author,
-                creationDate = request.creationDate.takeIf { it != null } ?: book.creationDate
+                creationDate = request.creationDate ?: book.creationDate
             )
         ).toView()
     }

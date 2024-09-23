@@ -52,12 +52,14 @@ class BookRentalController(
         ResponseEntity.ok(bookRentalService.returnBook(request, bookId))
 
     @DeleteMapping("/")
-    fun deleteAll() {
+    fun deleteAll(): ResponseEntity<Void> {
         bookRentalService.deleteAllBookRentals()
+        return ResponseEntity.noContent().build()
     }
 
     @DeleteMapping("/{rentalId}")
-    fun deleteById(@PathVariable rentalId: Long) {
+    fun deleteById(@PathVariable rentalId: Long): ResponseEntity<Void> {
         bookRentalService.deleteBookRentalById(rentalId)
+        return ResponseEntity.noContent().build()
     }
 }

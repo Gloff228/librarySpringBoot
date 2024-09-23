@@ -47,12 +47,14 @@ class BookController(
         ResponseEntity.ok(bookService.updateBook(bookId, request))
 
     @DeleteMapping("/")
-    fun deleteAll() {
+    fun deleteAll(): ResponseEntity<Void> {
         bookService.deleteAllBooks()
+        return ResponseEntity.noContent().build()
     }
 
     @DeleteMapping("/{bookId}")
-    fun deleteById(@PathVariable bookId: Long) {
+    fun deleteById(@PathVariable bookId: Long): ResponseEntity<Void> {
         bookService.deleteBookById(bookId)
+        return ResponseEntity.noContent().build()
     }
 }
